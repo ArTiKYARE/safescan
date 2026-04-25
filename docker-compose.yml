@@ -255,8 +255,8 @@ services:
     image: dpage/pgadmin4
     container_name: safescan-pgadmin
     environment:
-      # ✅ Исправлено: используем .localhost вместо .local
-      PGADMIN_DEFAULT_EMAIL: admin@localhost
+      # ✅ Исправлено: используем валидный домен для email
+      PGADMIN_DEFAULT_EMAIL: admin@localhost.local
       PGADMIN_DEFAULT_PASSWORD: admin
     ports:
       - "5050:80"

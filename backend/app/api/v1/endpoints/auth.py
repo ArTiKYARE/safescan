@@ -108,8 +108,8 @@ async def register(user_data: UserCreate, db: AsyncSession = Depends(get_db)):
     db.add(new_user)
     await db.flush()
 
-    # ✅ FIX 2: Отправка письма в фоне через create_task
-    asyncio.create_task(_send_welcome_email_bg(new_user.email, verification_token))
+    # ✅ FIX 2: Отправка письма отключена для ускорения регистрации
+    # asyncio.create_task(_send_welcome_email_bg(new_user.email, verification_token))
 
     await log_audit_event(
         db=db,
