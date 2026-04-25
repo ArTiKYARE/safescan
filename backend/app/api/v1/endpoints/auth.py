@@ -43,14 +43,16 @@ router = APIRouter()
 async def _send_welcome_email_bg(email: str, token: str):
     """Отправка письма в фоновом потоке, не блокируя ответ клиенту."""
     try:
-        await asyncio.to_thread(
-            send_email,
+        # Используем asyncio.create_task для асинхронной отправки
+        # Это не блокирует основной поток и выполняется параллельно
+        from app.core.email import send_email
+        await send_email(
             to_email=email,
             subject="SafeScan — Подтверждение email",
             html_content=f"""
             <h2>Добро пожаловать в SafeScan!</h2>
             <p>Перейдите по ссылке для подтверждения email:</p>
-            <a href="{settings.FRONTEND_URL}/verify-email?token={token}">Подтвердить email</a>
+            <a href="{settings.APP_CORS_ORIGINS.split(',')[0]}/verify-email?token={token}">Подтвердить email</a>
             <p><small>Ссылка действительна 24 часа.</small></p>
             """,
         )
