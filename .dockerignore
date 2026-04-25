@@ -1,0 +1,23 @@
+# Backend
+node_modules/
+venv/
+__pycache__/
+*.pyc
+.env
+.env.local
+
+# Frontend
+.next/
+node_modules/
+.env.local
+
+# Docker
+minio-data/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

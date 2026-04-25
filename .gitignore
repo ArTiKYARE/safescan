@@ -1,0 +1,38 @@
+# === Environment files with secrets ===
+.env
+.env.local
+.env.production
+.env.*.local
+*.env
+!*.env.example
+
+# === IDE / Editor ===
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# === Python ===
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# === Node / Next.js ===
+node_modules/
+.next/
+out/
+build/
+npm-debug.log*
+
+# === Docker ===
+*.log
+docker-compose.override.yml
+
+# === OS specific ===
+.DS_Store
+Thumbs.db
+nul

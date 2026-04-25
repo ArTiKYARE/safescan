@@ -1,0 +1,41 @@
+:80 {
+    redir https://{host}{uri} permanent
+}
+
+safescanget.ru {
+    # 🔐 CSP для Next.js + mixed content fix
+    header Content-Security-Policy "
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' 'unsafe-eval' https:;
+        style-src 'self' 'unsafe-inline' https:;
+        img-src 'self' data: https: blob:;
+        font-src 'self' data: https:;
+        connect-src 'self' https://safescanget.ru;
+        frame-src 'self';
+        frame-ancestors 'none';
+        upgrade-insecure-requests;
+        block-all-mixed-content;
+    "
+
+    # Фронтенд (все запросы по умолчанию)
+    reverse_proxy frontend:3000
+
+    # API — явно на бэкенд
+    handle /api/* {
+        reverse_proxy backend:8000
+    }
+
+    # Health checks
+    handle /health {
+        reverse_proxy backend:8000
+    }
+
+    # Автоматический HTTPS через Let's Encrypt
+    tls crahercenter@gmail.com
+
+    # Логирование
+    log {
+        output file /var/log/caddy/access.log
+        format json
+    }
+}
